@@ -25,7 +25,7 @@ public class DefaultAerogearAdminServiceIT2 {
     @Before
     public void setup() {
 
-        PushServer pushServer = new PushServer( "https://yourpushserver.com" );
+        PushServer pushServer = new PushServer( "https://yourpushserver.com", "https://yourpushserver.com" );
         pushServer.setKeycloakCredentials("username", "password", "clientId");
 
         adminService = new DefaultAerogearAdminService( pushServer );
