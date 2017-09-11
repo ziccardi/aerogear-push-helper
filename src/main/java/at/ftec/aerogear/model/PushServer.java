@@ -13,26 +13,27 @@ public class PushServer {
 
     private URI pushURI;
 
+    private URI authURI;
+
     private String username;
     private String password;
     private String clientId;
 
-    public PushServer( URI pushURI ) {
-        if( pushURI == null || pushURI.toString().length() < 5 ) {
-            throw new IllegalArgumentException( "URI must not be empty or is too short (eg. 'http://aerogearserver.com')" );
-        }
-        
-        // if the last char is an slash ("/") -> cut it
-        if(pushURI.toString().endsWith("/")) {
-            String urlString = pushURI.toString();
-			pushURI = URI.create( urlString.substring( 0, urlString.length() - 1 ) );
-        }
-
-        this.pushURI = pushURI;
+    public PushServer( URI pushURI, URI authURI ) {
+        this.pushURI = checkURI(pushURI);
+        this.authURI = checkURI(authURI);
     }
 
-    public PushServer( String url ) {
-		this( URI.create( url ) );
+    public PushServer( String pushUrl, String authUrl ) {
+		this( URI.create( pushUrl ), URI.create( authUrl ) );
+    }
+
+    public URI getAuthURI() {
+        return authURI;
+    }
+
+    public void setAuthURI(URI authURI) {
+        this.authURI = authURI;
     }
 
     public URI getPushURI() {
@@ -76,6 +77,18 @@ public class PushServer {
     }
 
     /**
+     *
+     * @return the push url or {@code null} if an error occurs
+     */
+    public String getAuthUrl() {
+        try {
+            return authURI.toURL().toString();
+        } catch (MalformedURLException e) {
+            return null;
+        }
+    }
+
+    /**
      * for the most api calls you need to be authenticated with keycloack.
      *
      * @param username
@@ -86,5 +99,19 @@ public class PushServer {
         setUsername(username);
         setPassword(password);
         setClientId(clientId);
+    }
+
+
+    private URI checkURI(URI uri) {
+        if( uri == null || uri.toString().length() < 5 ) {
+            throw new IllegalArgumentException( "URI must not be empty or is too short (eg. 'http://aerogearserver.com')" );
+        }
+
+        // if the last char is an slash ("/") -> cut it
+        if(uri.toString().endsWith("/")) {
+            String urlString = uri.toString();
+            uri = URI.create( urlString.substring( 0, urlString.length() - 1 ) );
+        }
+        return uri;
     }
 }

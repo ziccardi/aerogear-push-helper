@@ -17,13 +17,14 @@ public class PushServerTest {
 
     @Test
     public void testUrl() throws MalformedURLException {
-        pushServer = new PushServer( "http://test.at:9512/" );
+        pushServer = new PushServer( "http://test.at:9512/", "http://testother.at:8080/" );
         String url = pushServer.getPushUrl();
         Assert.assertEquals( "http://test.at:9512", url );
+        Assert.assertEquals( "http://testother.at:8080", pushServer.getAuthUrl() );
     }
 
     @Test
     public void tooShortServerUrl() {
-        pushServer = new PushServer("abc");
+        pushServer = new PushServer("abc", "foo");
     }
 }
