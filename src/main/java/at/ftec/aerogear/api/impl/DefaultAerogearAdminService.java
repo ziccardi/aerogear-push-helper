@@ -196,9 +196,7 @@ public class DefaultAerogearAdminService implements AerogearAdminService {
 		switch (variant.getType()) {
 			case ADM: return createVariantsUrl + "/adm";
 			case ANDROID: return createVariantsUrl + "/android";
-			case SIMPLE_PUSH: return createVariantsUrl + "/simplePush";
 			case IOS: return createVariantsUrl + "/ios";
-			case WINDOWS_MPNS: return createVariantsUrl + "/windowsMPNS";
 			case WINDOWS_WNS: return createVariantsUrl + "/windowsWNS";
 		}
 

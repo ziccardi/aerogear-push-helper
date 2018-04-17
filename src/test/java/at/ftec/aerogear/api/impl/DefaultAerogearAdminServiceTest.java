@@ -22,7 +22,7 @@ public class DefaultAerogearAdminServiceTest {
 
     @Before
     public void initServer() {
-        PushServer pushServer = new PushServer("http://testme.url");
+        PushServer pushServer = new PushServer("http://testme.url", "http://testme.url");
         adminService = new DefaultAerogearAdminService(pushServer);
     }
 
